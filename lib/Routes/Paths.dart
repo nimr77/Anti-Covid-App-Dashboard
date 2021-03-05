@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/Pages/HomePage.dart';
 import 'package:fst_anti_covid_project/Pages/LoadingPage.dart';
 
 class Path {
@@ -12,12 +13,10 @@ class Path {
       r'^' + MyLoadingPage.route,
       (context, match) => MyLoadingPage(),
     ),
-    // Path(
-    //   r'^' + MyChangingPasswordPage.route,
-    //       (context, match) => MyChangingPasswordPage(
-    //     code: match,
-    //   ),
-    // ),
+    Path(
+      r'^' + MyUsersPage.route,
+      (context, match) => MyUsersPage(),
+    ),
   ];
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     for (Path path in paths) {

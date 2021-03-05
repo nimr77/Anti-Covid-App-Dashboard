@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+
 import '../Style/MyTextStyle.dart';
 import '../Util/GeneralUtil.dart';
 import '../generated/l10n.dart';
-
 import 'DashboardWidgets.dart';
 import 'GlobalUI.dart';
 import 'InputWidgets.dart';
 import 'MyAppBar.dart';
 
-class MyMenuItemsTableViewPage extends StatefulWidget {
+class MyTamplateViewPage extends StatefulWidget {
   final Widget title;
   final Function() onAdding;
   final Function(String) onSearch;
@@ -17,7 +17,7 @@ class MyMenuItemsTableViewPage extends StatefulWidget {
   final bool useSearchIcon;
   final String searchText;
   final bool useScrolling;
-  MyMenuItemsTableViewPage(
+  MyTamplateViewPage(
       {@required this.title,
       @required this.myWidget,
       this.muilti,
@@ -27,11 +27,10 @@ class MyMenuItemsTableViewPage extends StatefulWidget {
       this.searchText,
       this.useScrolling = true});
   @override
-  MyMenuItemsTableViewPageState createState() =>
-      MyMenuItemsTableViewPageState();
+  MyTamplateViewPageState createState() => MyTamplateViewPageState();
 }
 
-class MyMenuItemsTableViewPageState extends State<MyMenuItemsTableViewPage> {
+class MyTamplateViewPageState extends State<MyTamplateViewPage> {
   TextEditingController mySearch = TextEditingController();
   String changeSearch;
   @override

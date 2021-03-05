@@ -1,9 +1,14 @@
-class MyUser {
+import 'package:fst_anti_covid_project/models/Person.dart';
+
+class MyUser implements Person {
   String id;
   String name;
   String email;
   String phoneNumber;
   String token;
+
+  @override
+  String address;
 }
 
 // class MyUser {

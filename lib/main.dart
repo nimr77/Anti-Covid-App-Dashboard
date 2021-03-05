@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Pages/LoadingPage.dart';
+import 'Routes/Paths.dart' as routes;
 import 'Style/MyTextStyle.dart';
 import 'generated/l10n.dart';
 
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
           S.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        // home: MyLoadingScreen(),
-        // initialRoute: MyLoadingScreen.route,
-        // onGenerateRoute: Path.onGenerateRoute,
+        home: MyLoadingPage(),
+        initialRoute: MyLoadingPage.route,
+        onGenerateRoute: routes.Path.onGenerateRoute,
         debugShowCheckedModeBanner: false,
         title: "Dashboard",
         color: Colors.purple[700],

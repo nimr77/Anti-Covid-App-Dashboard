@@ -1,10 +1,11 @@
 import 'package:firebase/firebase.dart';
+import 'package:fst_anti_covid_project/Config/APIKeys.dart';
 
 class MyFirebaseApp {
   static String lastUserKey;
   static initApp() {
     initializeApp(
-        apiKey: ,
+        apiKey: MyAPIKeys.ApiKeys,
         authDomain: "secondtry-413fb.firebaseapp.com",
         databaseURL: "https://secondtry-413fb.firebaseio.com",
         projectId: "secondtry-413fb",

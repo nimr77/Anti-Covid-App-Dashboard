@@ -31,6 +31,7 @@ class SimpleActionButton extends StatelessWidget {
     return AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
         child: MaterialButton(
+          key: ValueKey(isLoading),
           onPressed: !isLoading ? onTap : () {},
           elevation: elevation,
           color: myColor,
@@ -38,7 +39,6 @@ class SimpleActionButton extends StatelessWidget {
               borderSide: BorderSide(color: Colors.transparent),
               borderRadius: BorderRadius.circular(radius)),
           child: Container(
-            key: ValueKey(isLoading),
             height: height,
             width: width,
             child: !isLoading

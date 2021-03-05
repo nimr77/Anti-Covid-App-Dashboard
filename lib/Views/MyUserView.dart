@@ -29,56 +29,74 @@ class _MyUserViewState extends State<MyUserView> {
   Widget build(BuildContext context) {
     return ClipRRect(
       child: Container(
-        width: 100,
-        height: 80,
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-              color: Colors.black87.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 15)
-        ]),
+        width: 400,
+        height: 180,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(color: Colors.grey),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black87.withOpacity(0.1),
+                  blurRadius: 10,
+                  spreadRadius: 10)
+            ]),
         child: Column(
           children: [
-            ListTile(
-              leading: IconButton(
-                onPressed: () {
-                  // notification body
-                },
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.grey,
+            SizedBox(
+              height: 130,
+              width: 400,
+              child: ListTile(
+                leading: IconButton(
+                  onPressed: () {
+                    // notification body
+                  },
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              title: Text(this.widget.myUser.name),
-              trailing: SimpleActionButton(
-                isLoading: widget.myUser.isLoading,
-                onTap: () {
-                  NearbyUsersControllers.getUploadsForUser(widget.myUser)
-                      .then((value) {
+                title: Text(this.widget.myUser.name),
+                trailing: SimpleActionButton(
+                  elevation: 0,
+                  width: 100,
+                  height: 30,
+                  isLoading: widget.myUser.isLoading,
+                  onTap: () {
+                    NearbyUsersControllers.getUploadsForUser(widget.myUser)
+                        .then((value) {
+                      setState(() {});
+                    });
                     setState(() {});
-                  });
-                  setState(() {});
-                },
-                child: Text(S.of(context).getUploads),
-              ),
-              subtitle: Column(
-                children: [
-                  Text(this.widget.myUser.phoneNumber ?? "-"),
-                  Text(this.widget.myUser.email ?? "-"),
-                  Text(this.widget.myUser.address ?? "-"),
-                ],
+                  },
+                  child: Center(child: Text(S.of(context).getUploads)),
+                ),
+                subtitle: SizedBox(
+                  height: 80,
+                  child: Column(
+                    children: [
+                      Text(this.widget.myUser.phoneNumber ?? "-"),
+                      Text(this.widget.myUser.email ?? "-"),
+                      Text(this.widget.myUser.address ?? "-"),
+                    ],
+                  ),
+                ),
               ),
             ),
             Row(
               children: [
                 for (final x in NearbyUsersControllers.getForThisUserUploads(
                     widget.myUser.id))
-                  ShowUpAnimation(
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(MyValidatorString.showGoodTime(
-                            DateTime.fromMillisecondsSinceEpoch(x.when)))),
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ShowUpAnimation(
+                      child: OutlinedButton(
+                          onPressed: () {},
+                          child: Text(MyValidatorString.showGoodTime(
+                              DateTime.fromMillisecondsSinceEpoch(x.when)))),
+                    ),
+                  ),
+                // three dots
               ],
             )
           ],

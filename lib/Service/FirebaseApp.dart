@@ -31,7 +31,8 @@ class MyFirebaseApp {
     Map data = snap.snapshot.val();
     data.forEach((key, value) {
       final t = <String, dynamic>{'id': key};
-      t.addAll(value);
+      t.addAll(value['data']);
+      print(value['data']);
       MyUser.listOfMe.add(MyUser.fromMap(t));
       lastUserKey = key;
     });

@@ -32,12 +32,16 @@ class NearbyUsersControllers {
 
   static Future<List<UserUploads>> getUploadsForUser(MyUser myUser) async {
     myUser.isLoading = true;
-    if (getForThisUserUploads(myUser.id).isNotEmpty)
+    if (getForThisUserUploads(myUser.id).isNotEmpty) {
+      myUser.isLoading = false;
+
       return getForThisUserUploads(myUser.id);
+    }
     var q = await MyFirebaseApp.usersUploadRef.child(myUser.id).once('value');
     Map data = q.snapshot.val();
     data.keys.toList().forEach((element) {
-      UserUploads.listOfMe.add(UserUploads(when: element, userId: myUser.id));
+      UserUploads.listOfMe
+          .add(UserUploads(when: int.parse(element), userId: myUser.id));
     });
     myUser.isLoading = false;
     return getForThisUserUploads(myUser.id);

@@ -13,7 +13,7 @@ class MyUsersPage extends StatefulWidget {
 
 class _MyUsersPageState extends State<MyUsersPage> {
   String search = "";
-  bool loading = false;
+  bool loading = true;
   @override
   void initState() {
     if (MyUser.listOfMe.isEmpty) {
@@ -46,11 +46,13 @@ class _MyUsersPageState extends State<MyUsersPage> {
                 color: Colors.grey,
               )
             : ListUsersInDatabase(
-                myUsers: MyUser.listOfMe.where((element) => search.isEmpty
-                    ? true
-                    : element.name
-                        .toUpperCase()
-                        .contains(search.toUpperCase())),
+                myUsers: MyUser.listOfMe
+                    .where((element) => search.isEmpty
+                        ? true
+                        : element.name
+                            .toUpperCase()
+                            .contains(search.toUpperCase()))
+                    .toList(),
               ),
       ),
     );

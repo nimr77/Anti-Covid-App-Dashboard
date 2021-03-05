@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'Pages/LoadingPage.dart';
 import 'Routes/Paths.dart' as routes;
+import 'Service/FirebaseApp.dart';
 import 'Style/MyTextStyle.dart';
 import 'generated/l10n.dart';
 
@@ -13,6 +14,9 @@ void main() {
 class MyApp extends StatelessWidget {
   static GlobalKey<NavigatorState> myStateNavigator =
       GlobalKey<NavigatorState>();
+  MyApp() {
+    MyFirebaseApp.initApp();
+  }
   @override
   Widget build(BuildContext context) => MaterialApp(
         locale: Locale('en'),
@@ -20,7 +24,7 @@ class MyApp extends StatelessWidget {
           S.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        home: MyLoadingPage(),
+        // home: MyLoadingPage(),
         initialRoute: MyLoadingPage.route,
         onGenerateRoute: routes.Path.onGenerateRoute,
         debugShowCheckedModeBanner: false,

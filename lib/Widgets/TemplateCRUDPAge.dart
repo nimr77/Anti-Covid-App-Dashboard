@@ -6,7 +6,6 @@ import '../generated/l10n.dart';
 import 'DashboardWidgets.dart';
 import 'GlobalUI.dart';
 import 'InputWidgets.dart';
-import 'MyAppBar.dart';
 
 class MyTamplatViewPage extends StatefulWidget {
   final Widget title;
@@ -51,7 +50,7 @@ class MyTamplatViewPageState extends State<MyTamplatViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: UIGlobal.myScafState,
-      appBar: MyAppBar.myAppBar(this),
+      // appBar: MyAppBar.myAppBar(this),
       body: Stack(
         children: [
           Align(

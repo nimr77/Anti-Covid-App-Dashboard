@@ -1,0 +1,36 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'Style/MyTextStyle.dart';
+import 'generated/l10n.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  static GlobalKey<NavigatorState> myStateNavigator =
+      GlobalKey<NavigatorState>();
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        locale: Locale('en'),
+        localizationsDelegates: [
+          S.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        // home: MyLoadingScreen(),
+        // initialRoute: MyLoadingScreen.route,
+        // onGenerateRoute: Path.onGenerateRoute,
+        debugShowCheckedModeBanner: false,
+        title: "Dashboard",
+        color: Colors.purple[700],
+        navigatorKey: myStateNavigator,
+        theme: ThemeData(
+            fontFamily: 'Poppins',
+            primaryColor: Colors.deepOrange[800],
+            textTheme: TextTheme(
+              headline3: MyTextStyle.simpleTitleTextStyle(
+                  myColor: Colors.black87, fontSize: 20),
+            )),
+      );
+}

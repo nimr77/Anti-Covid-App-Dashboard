@@ -214,6 +214,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "title" : MessageLookupByLibrary.simpleMessage("Title"),
     "titleUpdateCategory" : MessageLookupByLibrary.simpleMessage("Update category"),
     "totalPrice" : MessageLookupByLibrary.simpleMessage("Total price"),
+    "totalUploads" : MessageLookupByLibrary.simpleMessage("Total uploads"),
     "unTitled" : MessageLookupByLibrary.simpleMessage("Untitled"),
     "uploadingImage" : MessageLookupByLibrary.simpleMessage("Uploading image"),
     "user2Password" : MessageLookupByLibrary.simpleMessage("Confirm the password"),

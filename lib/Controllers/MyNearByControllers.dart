@@ -37,7 +37,10 @@ class NearbyUsersControllers {
 
       return getForThisUserUploads(myUser.id);
     }
-    var q = await MyFirebaseApp.usersUploadRef.child(myUser.id).once('value');
+    var q = await MyFirebaseApp.usersUploadRef
+        .child(myUser.id)
+        .orderByKey()
+        .once('value');
     Map data = q.snapshot.val();
     data.keys.toList().forEach((element) {
       UserUploads.listOfMe

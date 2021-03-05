@@ -29,7 +29,7 @@ class _MyUserViewState extends State<MyUserView> {
   Widget build(BuildContext context) {
     return ClipRRect(
       child: Container(
-        width: 400,
+        width: 420,
         height: 180,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -44,8 +44,7 @@ class _MyUserViewState extends State<MyUserView> {
         child: Column(
           children: [
             SizedBox(
-              height: 130,
-              width: 400,
+              height: 80,
               child: ListTile(
                 leading: IconButton(
                   onPressed: () {
@@ -74,16 +73,38 @@ class _MyUserViewState extends State<MyUserView> {
                 subtitle: SizedBox(
                   height: 80,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(this.widget.myUser.phoneNumber ?? "-"),
-                      Text(this.widget.myUser.email ?? "-"),
-                      Text(this.widget.myUser.address ?? "-"),
+                      SelectableText(
+                        "${S.of(context).userPhone}: ${this.widget.myUser.phoneNumber ?? " - "}",
+                        maxLines: 1,
+                      ),
+                      SelectableText(
+                        "${S.of(context).userEmail} ${this.widget.myUser.email ?? " - "}",
+                        maxLines: 1,
+                      ),
+                      SelectableText(
+                        this.widget.myUser.address ?? "-",
+                        maxLines: 1,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            Row(
+            if (NearbyUsersControllers.getForThisUserUploads(widget.myUser.id)
+                .isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                        "${S.of(context).totalUploads}: ${NearbyUsersControllers.getForThisUserUploads(widget.myUser.id).length}"),
+                  ],
+                ),
+              ),
+            Wrap(
               children: [
                 for (final x in NearbyUsersControllers.getForThisUserUploads(
                     widget.myUser.id))

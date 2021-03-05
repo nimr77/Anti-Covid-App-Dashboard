@@ -222,5 +222,6 @@
   "all": "All",
   "anyDay": "Any day",
   "getUploads": "Get uploads",
-  "sendNotifications": "Send notifications"
+  "sendNotifications": "Send notifications",
+  "totalUploads": "Total uploads"
 }

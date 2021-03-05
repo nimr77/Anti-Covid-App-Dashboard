@@ -16,8 +16,10 @@ class MyFirebaseApp {
   }
 
   static Database db = database();
-  static final usersRef = db.ref('Users');
-  static final usersInfoRef = db.ref('Users').child('UsersInfo');
+  static final _usersRef = db.ref('Users');
+  static final usersInfoRef = _usersRef.child('UsersInfo');
+  static final usersUploadRef = _usersRef.child('UsersUpload');
+  static final usersNotificationsRef = _usersRef.child('UsersNotifications');
 
   /// this will load the first 30
   static Future loadingUsers([int maxLimit = 30]) async {
@@ -31,6 +33,7 @@ class MyFirebaseApp {
       final t = <String, dynamic>{'id': key};
       t.addAll(value);
       MyUser.listOfMe.add(MyUser.fromMap(t));
+      lastUserKey = key;
     });
   }
 }

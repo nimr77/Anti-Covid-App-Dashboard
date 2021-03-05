@@ -2164,6 +2164,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Get uploads`
+  String get getUploads {
+    return Intl.message(
+      'Get uploads',
+      name: 'getUploads',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send notifications`
+  String get sendNotifications {
+    return Intl.message(
+      'Send notifications',
+      name: 'sendNotifications',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

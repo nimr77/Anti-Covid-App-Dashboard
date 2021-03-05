@@ -91,8 +91,65 @@ class MyUser implements Person {
 
 //</editor-fold>
   static final listOfMe = <MyUser>[];
+  bool isLoading = false;
 }
 
+class UserUploads {
+  int when;
+  String userId;
+
+  //<editor-fold desc="Data Methods" defaultstate="collapsed">
+
+  UserUploads({
+    @required this.when,
+    @required this.userId,
+  });
+
+  UserUploads copyWith({
+    int when,
+    String userId,
+  }) {
+    return new UserUploads(
+      when: when ?? this.when,
+      userId: userId ?? this.userId,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'UserUploads{when: $when, userId: $userId}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserUploads &&
+          runtimeType == other.runtimeType &&
+          when == other.when &&
+          userId == other.userId);
+
+  @override
+  int get hashCode => when.hashCode ^ userId.hashCode;
+
+  factory UserUploads.fromMap(Map<String, dynamic> map) {
+    return new UserUploads(
+      when: map['when'] as int,
+      userId: map['userId'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'when': this.when,
+      'userId': this.userId,
+    } as Map<String, dynamic>;
+  }
+
+  //</editor-fold>
+
+  static final listOfMe = <UserUploads>[];
+}
 // class MyUser {
 //   String id;
 //   String name;

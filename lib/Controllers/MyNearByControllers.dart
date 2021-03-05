@@ -16,9 +16,8 @@ class NearbyUsersControllers {
       MyUser myUser, int whatUpload) async {
     // secondtry-413fb Users hvnDDlTguKffCcPekVdooDVlqPe2 data 1614780848816 data ContactsNearby 1 MyScanned 3 whenBeenScanned
     final r = <MyNearbyUser>[];
-    var q = MyFirebaseApp.usersRef
+    var q = MyFirebaseApp.usersUploadRef
         .child(myUser.id)
-        .child('data')
         .child('$whatUpload')
         .child('data')
         .child('ContactsNearby');
@@ -30,4 +29,23 @@ class NearbyUsersControllers {
     });
     return null;
   }
+
+  static Future<List<UserUploads>> getUploadsForUser(MyUser myUser) async {
+    myUser.isLoading = true;
+    if (getForThisUserUploads(myUser.id).isNotEmpty)
+      return getForThisUserUploads(myUser.id);
+    var q = await MyFirebaseApp.usersUploadRef.child(myUser.id).once('value');
+    Map data = q.snapshot.val();
+    data.keys.toList().forEach((element) {
+      UserUploads.listOfMe.add(UserUploads(when: element, userId: myUser.id));
+    });
+    myUser.isLoading = false;
+    return getForThisUserUploads(myUser.id);
+  }
+
+  // this form the current app state
+  static List<UserUploads> getForThisUserUploads(String userId) =>
+      UserUploads.listOfMe
+          .where((element) => element.userId == userId)
+          .toList();
 }

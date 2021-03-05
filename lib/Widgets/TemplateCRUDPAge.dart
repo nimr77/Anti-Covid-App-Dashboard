@@ -8,29 +8,31 @@ import 'GlobalUI.dart';
 import 'InputWidgets.dart';
 import 'MyAppBar.dart';
 
-class MyTamplateViewPage extends StatefulWidget {
+class MyTamplatViewPage extends StatefulWidget {
   final Widget title;
   final Function() onAdding;
   final Function(String) onSearch;
-  final Widget Function(StateSetter, BuildContext) myWidget;
-  List<Widget> muilti;
+  final Widget child;
+  final List<Widget> muilti;
   final bool useSearchIcon;
   final String searchText;
   final bool useScrolling;
-  MyTamplateViewPage(
+  MyTamplatViewPage(
       {@required this.title,
-      @required this.myWidget,
+      @required this.child,
       this.muilti,
       this.onAdding,
       this.onSearch,
       this.useSearchIcon = false,
       this.searchText,
-      this.useScrolling = true});
+      this.useScrolling = true,
+      key})
+      : super(key: key);
   @override
-  MyTamplateViewPageState createState() => MyTamplateViewPageState();
+  MyTamplatViewPageState createState() => MyTamplatViewPageState();
 }
 
-class MyTamplateViewPageState extends State<MyTamplateViewPage> {
+class MyTamplatViewPageState extends State<MyTamplatViewPage> {
   TextEditingController mySearch = TextEditingController();
   String changeSearch;
   @override
@@ -118,10 +120,9 @@ class MyTamplateViewPageState extends State<MyTamplateViewPage> {
               //View and delete
               widget.useScrolling
                   ? Scrollbar(
-                      child: SingleChildScrollView(
-                          child: widget.myWidget(this.setState, context)),
+                      child: SingleChildScrollView(child: widget.child),
                     )
-                  : widget.myWidget(this.setState, context),
+                  : widget.child,
               MyUtil.getContextHeight(context) * 0.9,
               MyUtil.getContextWidth(context) * 0.935,
               borderWidth: 0,

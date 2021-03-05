@@ -220,5 +220,7 @@
   "extras": "Extras",
   "filter": "Filter",
   "all": "All",
-  "anyDay": "Any day"
+  "anyDay": "Any day",
+  "getUploads": "Get uploads",
+  "sendNotifications": "Send notifications"
 }

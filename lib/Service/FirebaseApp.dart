@@ -1,5 +1,6 @@
 import 'package:firebase/firebase.dart';
 import 'package:fst_anti_covid_project/Config/APIKeys.dart';
+import 'package:fst_anti_covid_project/models/MyUser.dart';
 
 class MyFirebaseApp {
   static String lastUserKey;
@@ -16,7 +17,20 @@ class MyFirebaseApp {
 
   static Database db = database();
   static final usersRef = db.ref('Users');
+  static final usersInfoRef = db.ref('Users').child('UsersInfo');
 
   /// this will load the first 30
-  static Future loadingUsers([int maxLimit = 30]) async {}
+  static Future loadingUsers([int maxLimit = 30]) async {
+    var q = usersInfoRef.limitToFirst(maxLimit);
+    if (lastUserKey == null) {
+      q = q.startAt(lastUserKey);
+    }
+    var snap = await q.once('value');
+    Map data = snap.snapshot.val();
+    data.forEach((key, value) {
+      final t = <String, dynamic>{'id': key};
+      t.addAll(value);
+      MyUser.listOfMe.add(MyUser.fromMap(t));
+    });
+  }
 }

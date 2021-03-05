@@ -4,7 +4,8 @@ import 'package:fst_anti_covid_project/models/Person.dart';
 class MyNearbyUser implements Person {
   String id;
   Map<String, double> lastDetect;
-  List<MyNearbyScanned> myScanned() {}
+  List<MyNearbyScanned> myScanned() =>
+      MyNearbyScanned.listOfMe.where((element) => element.userId == this.id);
 
   @override
   String address;
@@ -97,7 +98,7 @@ class MyNearbyUser implements Person {
   }
 
 //</editor-fold>
-  final listOfMe = <MyNearbyUser>[];
+  static final listOfMe = <MyNearbyUser>[];
 }
 
 ///this the number of scanned that been done for a user
@@ -182,5 +183,5 @@ class MyNearbyScanned {
 
 //</editor-fold>
 
-  final listOfMe = <MyNearbyScanned>[];
+  static final listOfMe = <MyNearbyScanned>[];
 }

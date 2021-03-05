@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fst_anti_covid_project/models/Person.dart';
 
 class MyUser implements Person {
@@ -9,6 +10,87 @@ class MyUser implements Person {
 
   @override
   String address;
+
+//<editor-fold desc="Data Methods" defaultstate="collapsed">
+
+  MyUser({
+    @required this.id,
+    @required this.name,
+    @required this.email,
+    @required this.phoneNumber,
+    @required this.token,
+    @required this.address,
+  });
+
+  MyUser copyWith({
+    String id,
+    String name,
+    String email,
+    String phoneNumber,
+    String token,
+    String address,
+  }) {
+    return new MyUser(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      token: token ?? this.token,
+      address: address ?? this.address,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'MyUser{id: $id, name: $name, email: $email, phoneNumber: $phoneNumber, token: $token, address: $address}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MyUser &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          email == other.email &&
+          phoneNumber == other.phoneNumber &&
+          token == other.token &&
+          address == other.address);
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      name.hashCode ^
+      email.hashCode ^
+      phoneNumber.hashCode ^
+      token.hashCode ^
+      address.hashCode;
+
+  factory MyUser.fromMap(Map<String, dynamic> map) {
+    return new MyUser(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      email: map['email'] as String,
+      phoneNumber: map['phoneNumber'] as String,
+      token: map['token'] as String,
+      address: map['address'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'id': this.id,
+      'name': this.name,
+      'email': this.email,
+      'phoneNumber': this.phoneNumber,
+      'token': this.token,
+      'address': this.address,
+    } as Map<String, dynamic>;
+  }
+
+//</editor-fold>
+  static final listOfMe = <MyUser>[];
 }
 
 // class MyUser {

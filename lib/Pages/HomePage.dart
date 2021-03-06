@@ -33,7 +33,10 @@ class _MyUsersPageState extends State<MyUsersPage> {
       duration: Duration(milliseconds: 500),
       child: MyTamplatViewPage(
         key: ValueKey(loading),
-        title: Text("Users"),
+        title: Text(
+          "Users",
+          style: Theme.of(context).textTheme.headline3,
+        ),
         useSearchIcon: true,
         searchText: search,
         onSearch: (str) {

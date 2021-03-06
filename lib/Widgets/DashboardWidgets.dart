@@ -39,6 +39,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/Pages/HomePage.dart';
+import 'package:fst_anti_covid_project/main.dart';
 
 import '../Style/MyTextStyle.dart';
 import '../generated/l10n.dart';
@@ -97,7 +99,6 @@ class MyCardWidget extends StatelessWidget {
 ///This menu depends on the boolian value that determn if its in full scale
 ///or not
 class MyMenu extends StatefulWidget {
-  static int selectedItem = -1;
   static bool showFullMenu = false;
 
   @override
@@ -117,7 +118,7 @@ class _MyMenuState extends State<MyMenu> {
                     key: ValueKey<bool>(true),
                     onPressed: () {
                       setState(() {
-                        MyMenu.selectedItem = index;
+                        MenuElement.selectedItem = index;
                         MenuElement.elements[index].onTap(context);
                       });
                     },
@@ -128,12 +129,12 @@ class _MyMenuState extends State<MyMenu> {
                         Text(
                           MenuElement.elements[index].title(),
                           style: MyTextStyle.simpleButtonTextStyle(
-                              myColor: MyMenu.selectedItem == index
+                              myColor: MenuElement.selectedItem == index
                                   ? Colors.deepOrange
                                   : Colors.black54),
                         ),
                         Icon(MenuElement.elements[index].iconData,
-                            color: MyMenu.selectedItem == index
+                            color: MenuElement.selectedItem == index
                                 ? Colors.deepOrange
                                 : Colors.black54)
                       ],
@@ -143,12 +144,12 @@ class _MyMenuState extends State<MyMenu> {
                     message: MenuElement.elements[index].title(),
                     child: IconButton(
                       icon: Icon(MenuElement.elements[index].iconData,
-                          color: MyMenu.selectedItem == index
+                          color: MenuElement.selectedItem == index
                               ? Colors.deepOrange
                               : Colors.black54),
                       onPressed: () {
                         setState(() {
-                          MyMenu.selectedItem = index;
+                          MenuElement.selectedItem = index;
                           MenuElement.elements[index].onTap(context);
                         });
                       },
@@ -231,6 +232,7 @@ class MenuElement {
   IconData iconData;
 
   static final elements = <MenuElement>[];
+  static int selectedItem = 0;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -287,5 +289,12 @@ class MenuElement {
   }
 
 //</editor-fold>
-
+  static void initMyMenu() {
+    elements.add(MenuElement(
+        title: () => S.current.manageUsers,
+        onTap: (_) {
+          MyApp.myStateNavigator.currentState.pushNamed(MyUsersPage.route);
+        },
+        iconData: Icons.supervised_user_circle));
+  }
 }

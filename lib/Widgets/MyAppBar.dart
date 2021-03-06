@@ -66,7 +66,9 @@ class MyAppBar {
                       .firstWhere((element) => element.value == v)
                       .onChange();
                 },
-                value: MyMenuItem.menu[selectedIndex].value,
+                value: MyMenuItem.menu.isEmpty
+                    ? ""
+                    : MyMenuItem.menu[selectedIndex].value,
                 icon: Icon(Icons.person_rounded),
               )),
           Padding(
@@ -100,7 +102,7 @@ class MyMenuItem {
   Widget child;
   Function() onChange;
   String value;
-  static List<MyMenuItem> menu = List<MyMenuItem>();
+  static List<MyMenuItem> menu = <MyMenuItem>[];
 
   MyMenuItem(
       {@required this.child, @required this.onChange, @required this.value});

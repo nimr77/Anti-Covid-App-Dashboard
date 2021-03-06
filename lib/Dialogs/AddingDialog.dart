@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 import '../Style/MyTextStyle.dart';
 import '../Util/GeneralUtil.dart';
@@ -18,6 +19,7 @@ class MyAddingDialog {
   Future showMyDialog(BuildContext context) => showCupertinoDialog(
       context: context,
       builder: (context) => SimpleDialog(
+            titlePadding: title != null ? null : EdgeInsets.only(right: 8),
             title: title != null
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,7 +39,19 @@ class MyAddingDialog {
                           })
                     ],
                   )
-                : null,
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          })
+                    ],
+                  ),
             elevation: 2,
             shape: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),

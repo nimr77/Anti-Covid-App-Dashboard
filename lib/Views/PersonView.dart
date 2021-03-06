@@ -52,7 +52,7 @@ class _MyPersonViewState extends State<MyPersonView> {
                 maxLines: 1,
               ),
               SelectableText(
-                "${S.of(context).userEmail} ${this.widget.person.email ?? " - "}",
+                "${S.of(context).userEmail}: ${this.widget.person.email ?? " - "}",
                 maxLines: 1,
               ),
               SelectableText(

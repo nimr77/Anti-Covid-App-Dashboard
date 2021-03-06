@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/Controllers/MyNearByControllers.dart';
 import 'package:fst_anti_covid_project/models/MyNeabyUsers.dart';
 import 'package:fst_anti_covid_project/models/Person.dart';
 
@@ -157,8 +158,11 @@ class UserUploads {
   //</editor-fold>
 
   static final listOfMe = <UserUploads>[];
-  List<MyNearbyUser> getContactUsers() =>
-      [for (final x in contactsNearby) MyNearbyUser.fromMap(x)];
+  List<MyNearbyUser> getContactUsers() => <MyNearbyUser>[
+        for (final x in contactsNearby)
+          if (NearbyUsersControllers.addThisNearByUser(MyNearbyUser.fromMap(x)))
+            MyNearbyUser.fromMap(x)
+      ];
 }
 // class MyUser {
 //   String id;

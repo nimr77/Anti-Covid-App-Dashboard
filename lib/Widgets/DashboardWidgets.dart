@@ -81,12 +81,11 @@ class MyCardWidget extends StatelessWidget {
                 ]),
       child: Column(
         children: [
-          Expanded(
-            child: Padding(
+          if (title != null)
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: title,
+              child: SizedBox(height: 65, child: title),
             ),
-          ),
           Expanded(
               flex: 7,
               child: Padding(padding: const EdgeInsets.all(8.0), child: child)),

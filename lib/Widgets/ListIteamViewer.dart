@@ -29,13 +29,13 @@ class MyListItemViewer<T> extends StatelessWidget {
   MyListItemViewer({Key key, this.items, this.builder}) : super(key: key);
   final LiveOptions options = LiveOptions(
     // Start animation after (default zero)
-    delay: Duration(seconds: 1),
+    delay: Duration(milliseconds: 200),
 
     // Show each item through (default 250)
     showItemInterval: Duration(milliseconds: 500),
 
     // Animation duration (default 250)
-    showItemDuration: Duration(seconds: 1),
+    showItemDuration: Duration(milliseconds: 300),
 
     // Animations starts at 0.05 visible
     // item fraction in sight (default 0.025)

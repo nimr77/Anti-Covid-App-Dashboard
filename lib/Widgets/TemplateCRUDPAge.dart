@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Style/MyTextStyle.dart';
 import '../Util/GeneralUtil.dart';
 import '../generated/l10n.dart';
 import 'DashboardWidgets.dart';
@@ -55,7 +54,7 @@ class MyTemplatePageState extends State<MyTemplatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: UIGlobal.myScafState,
-      appBar: widget.showAppBar ? MyAppBar.myAppBar(this) : false,
+      appBar: widget.showAppBar ? MyAppBar.myAppBar(this) : null,
       body: Stack(
         children: [
           Align(
@@ -144,15 +143,7 @@ class MyTemplatePageState extends State<MyTemplatePage> {
 class MyMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MyCardWidget(
-        Text(
-          S.of(context).menu,
-          style: MyTextStyle.simpleTitleTextStyle(
-              myColor: Colors.black87, fontSize: 20),
-          textScaleFactor: MyUtil.getContextWidth(context) * 0.0007,
-        ),
-        MyMenu(),
-        MyUtil.getContextHeight(context) * 0.89,
+    return MyCardWidget(null, MyMenu(), MyUtil.getContextHeight(context) * 0.89,
         MyMenu.showFullMenu ? 270 : 80);
   }
 }

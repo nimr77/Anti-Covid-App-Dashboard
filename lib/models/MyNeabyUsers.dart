@@ -3,9 +3,10 @@ import 'package:fst_anti_covid_project/models/Person.dart';
 
 class MyNearbyUser implements Person {
   String id;
-  Map<String, double> lastDetect;
-  List<MyNearbyScanned> myScanned() =>
-      MyNearbyScanned.listOfMe.where((element) => element.userId == this.id);
+  Map lastDetect;
+  List<MyNearbyScanned> myScanned() => MyNearbyScanned.listOfMe
+      .where((element) => element.userId == this.id)
+      .toList();
 
   @override
   String address;
@@ -32,7 +33,7 @@ class MyNearbyUser implements Person {
 
   MyNearbyUser copyWith({
     String id,
-    Map<String, double> lastDetect,
+    Map lastDetect,
     String address,
     String email,
     String name,
@@ -77,7 +78,7 @@ class MyNearbyUser implements Person {
   factory MyNearbyUser.fromMap(Map<String, dynamic> map) {
     return new MyNearbyUser(
       id: map['UserId'] as String,
-      lastDetect: map['lastDetect'] as Map<String, double>,
+      lastDetect: map['lastDetect'],
       address: map['address'] as String,
       email: map['email'] as String,
       name: map['name'] as String,

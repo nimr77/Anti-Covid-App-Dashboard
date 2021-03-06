@@ -3,6 +3,7 @@ import 'package:fst_anti_covid_project/models/MyNeabyUsers.dart';
 import 'package:fst_anti_covid_project/models/MyUser.dart';
 
 class NearbyUsersControllers {
+  static const MaxIDNumber = "GCWXKUUiplXhvAn1559RMcelrBj2".length;
   static List<MyNearbyScanned> getScannedScannedPerDay(
       MyNearbyUser myNearbyUser,
       {DateTime when}) {
@@ -42,9 +43,9 @@ class NearbyUsersControllers {
         .orderByKey()
         .once('value');
     Map data = q.snapshot.val();
-    data.keys.toList().forEach((element) {
+    data.forEach((key, element) {
       UserUploads.listOfMe.add(UserUploads(
-          when: int.parse(element),
+          when: int.parse(key),
           userId: myUser.id,
           contactsNearby: element['data']['ContactsNearby']));
     });
@@ -57,4 +58,31 @@ class NearbyUsersControllers {
       UserUploads.listOfMe
           .where((element) => element.userId == userId)
           .toList();
+
+  static bool addThisNearByUser(MyNearbyUser myNearbyUser) =>
+      myNearbyUser.id.length == MaxIDNumber;
+
+  static Future<MyNearbyUser> reloadThisUserInfoIfNeeded(
+      MyNearbyUser myNearbyUser) async {
+    // try to get it from the data that are in the app now
+
+    if (myNearbyUser.name == null &&
+        MyUser.listOfMe
+                .indexWhere((element) => element.id == myNearbyUser.id) !=
+            -1) {
+      var usr = MyUser.listOfMe
+          .firstWhere((element) => element.id == myNearbyUser.id);
+      myNearbyUser.name = usr.name;
+      myNearbyUser.phoneNumber = usr.phoneNumber;
+      myNearbyUser.email = usr.email;
+      myNearbyUser.address = usr.address;
+    }
+    if (myNearbyUser.name == null) {
+      var q =
+          await MyFirebaseApp.usersInfoRef.child(myNearbyUser.id).once('value');
+      Map data = q.snapshot.val()['data'];
+      myNearbyUser = MyNearbyUser.fromMap(data);
+    }
+    return myNearbyUser;
+  }
 }

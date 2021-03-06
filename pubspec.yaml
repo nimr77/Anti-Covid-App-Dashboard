@@ -20,6 +20,7 @@ dependencies:
   intl: ^0.17.0
   animations: ^2.0.0
   fl_chart: ^0.20.1
+  auto_animated: ^3.0.0
 
 dev_dependencies:
   flutter_test:

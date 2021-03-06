@@ -41,20 +41,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Style/MyTextStyle.dart';
-// class _MyLogoState extends State<MyLogo> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         height: widget.width,
-//         width: widget.width,
-//         child: CircleAvatar(
-//           backgroundColor: Colors.transparent,
-//           backgroundImage: NetworkImage(widget.imageUrl),
-//         ));
-//   }
-// }
-
-import '../Util/GeneralUtil.dart';
 import '../generated/l10n.dart';
 
 class MyCardWidget extends StatelessWidget {
@@ -114,8 +100,6 @@ class MyMenu extends StatefulWidget {
   static int selectedItem = -1;
   static bool showFullMenu = false;
 
-  ///Contains the title that is a string and an icon with a function
-  static final elements = List<Map>();
   @override
   _MyMenuState createState() => _MyMenuState();
 }
@@ -124,18 +108,17 @@ class _MyMenuState extends State<MyMenu> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: MyMenu.elements.length,
+        itemCount: MenuElement.elements.length,
         itemBuilder: (context, index) {
           return AnimatedSwitcher(
             duration: Duration(milliseconds: !MyMenu.showFullMenu ? 500 : 200),
             child: MyMenu.showFullMenu
-                ? FlatButton(
+                ? TextButton(
                     key: ValueKey<bool>(true),
-                    height: MyUtil.getContextHeight(context) * 0.08,
                     onPressed: () {
                       setState(() {
                         MyMenu.selectedItem = index;
-                        MyMenu.elements[index]['function'](context);
+                        MenuElement.elements[index].onTap(context);
                       });
                     },
                     child: Row(
@@ -143,13 +126,13 @@ class _MyMenuState extends State<MyMenu> {
                       children: [
                         ///Add the color controller
                         Text(
-                          MyMenu.elements[index]['title'],
+                          MenuElement.elements[index].title(),
                           style: MyTextStyle.simpleButtonTextStyle(
                               myColor: MyMenu.selectedItem == index
                                   ? Colors.deepOrange
                                   : Colors.black54),
                         ),
-                        Icon(MyMenu.elements[index]['icon'],
+                        Icon(MenuElement.elements[index].iconData,
                             color: MyMenu.selectedItem == index
                                 ? Colors.deepOrange
                                 : Colors.black54)
@@ -157,16 +140,16 @@ class _MyMenuState extends State<MyMenu> {
                     ))
                 : Tooltip(
                     key: ValueKey<bool>(false),
-                    message: MyMenu.elements[index]['title'],
+                    message: MenuElement.elements[index].title(),
                     child: IconButton(
-                      icon: Icon(MyMenu.elements[index]['icon'],
+                      icon: Icon(MenuElement.elements[index].iconData,
                           color: MyMenu.selectedItem == index
                               ? Colors.deepOrange
                               : Colors.black54),
                       onPressed: () {
                         setState(() {
                           MyMenu.selectedItem = index;
-                          MyMenu.elements[index]['function'](context);
+                          MenuElement.elements[index].onTap(context);
                         });
                       },
                     ),
@@ -240,4 +223,69 @@ class MyFilterDialog {
               ),
             ));
   }
+}
+
+class MenuElement {
+  String Function() title;
+  Function(BuildContext) onTap;
+  IconData iconData;
+
+  static final elements = <MenuElement>[];
+
+//<editor-fold desc="Data Methods" defaultstate="collapsed">
+
+  MenuElement({
+    @required this.title,
+    @required this.onTap,
+    @required this.iconData,
+  });
+
+  MenuElement copyWith({
+    String Function() title,
+    Function(BuildContext) onTap,
+    IconData iconData,
+  }) {
+    return new MenuElement(
+      title: title ?? this.title,
+      onTap: onTap ?? this.onTap,
+      iconData: iconData ?? this.iconData,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'MenuElement{title: $title, onTap: $onTap, iconData: $iconData}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MenuElement &&
+          runtimeType == other.runtimeType &&
+          title == other.title &&
+          onTap == other.onTap &&
+          iconData == other.iconData);
+
+  @override
+  int get hashCode => title.hashCode ^ onTap.hashCode ^ iconData.hashCode;
+
+  factory MenuElement.fromMap(Map<String, dynamic> map) {
+    return new MenuElement(
+      title: map['title'] as String Function(),
+      onTap: map['onTap'] as Function(BuildContext),
+      iconData: map['iconData'] as IconData,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'title': this.title,
+      'onTap': this.onTap,
+      'iconData': this.iconData,
+    } as Map<String, dynamic>;
+  }
+
+//</editor-fold>
+
 }

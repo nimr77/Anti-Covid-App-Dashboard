@@ -2194,6 +2194,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Total number of scans`
+  String get totalNumberOfScans {
+    return Intl.message(
+      'Total number of scans',
+      name: 'totalNumberOfScans',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last time been scanned`
+  String get lastTimeBeenScanned {
+    return Intl.message(
+      'Last time been scanned',
+      name: 'lastTimeBeenScanned',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/Functions/ValidateStrings.dart';
+import 'package:fst_anti_covid_project/generated/l10n.dart';
 import 'package:fst_anti_covid_project/models/MyNeabyUsers.dart';
+
+import 'PersonView.dart';
 
 ///View
 ///name
@@ -16,6 +20,24 @@ class MySingleNearbyUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SizedBox(
+      height: 100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // the person view
+          MyPersonView(
+            person: myNearbyUser,
+          ),
+          // total number of contact
+          Text(
+              "${S.of(context).totalNumberOfScans}: ${myNearbyUser.myScanned().length}"),
+          // last time been scanned
+          Text(
+              "${S.of(context).lastTimeBeenScanned}: ${MyValidatorString.showGoodTime(DateTime.parse(myNearbyUser.myScanned().last.whenBeenScanned))}")
+        ],
+      ),
+    );
   }
 }

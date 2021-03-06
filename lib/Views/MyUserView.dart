@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:fst_anti_covid_project/Controllers/MyNearByControllers.dart';
 import 'package:fst_anti_covid_project/Functions/ValidateStrings.dart';
@@ -111,10 +113,25 @@ class _MyUserViewState extends State<MyUserView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ShowUpAnimation(
-                      child: OutlinedButton(
-                          onPressed: () {},
-                          child: Text(MyValidatorString.showGoodTime(
-                              DateTime.fromMillisecondsSinceEpoch(x.when)))),
+                      child: Hero(
+                        tag: "${x.userId}: ${x.when}",
+                        child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Hero(
+                                            tag: "${x.userId}: ${x.when}",
+                                            child: Container(
+                                              width: 200,
+                                              height: 200,
+                                              color: Colors.transparent,
+                                            ),
+                                          )));
+                            },
+                            child: Text(MyValidatorString.showGoodTime(
+                                DateTime.fromMillisecondsSinceEpoch(x.when)))),
+                      ),
                     ),
                   ),
                 // three dots

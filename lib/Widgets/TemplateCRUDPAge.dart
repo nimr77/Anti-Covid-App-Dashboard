@@ -8,7 +8,7 @@ import 'GlobalUI.dart';
 import 'InputWidgets.dart';
 import 'MyAppBar.dart';
 
-class MyTamplatViewPage extends StatefulWidget {
+class MyTemplatePage extends StatefulWidget {
   final Widget title;
   final Function() onAdding;
   final Function(String) onSearch;
@@ -17,9 +17,13 @@ class MyTamplatViewPage extends StatefulWidget {
   final bool useSearchIcon;
   final String searchText;
   final bool useScrolling;
-  MyTamplatViewPage(
+  final bool showMenu;
+  final bool showAppBar;
+  MyTemplatePage(
       {@required this.title,
       @required this.child,
+      this.showMenu = true,
+      this.showAppBar = true,
       this.muilti,
       this.onAdding,
       this.onSearch,
@@ -29,10 +33,10 @@ class MyTamplatViewPage extends StatefulWidget {
       key})
       : super(key: key);
   @override
-  MyTamplatViewPageState createState() => MyTamplatViewPageState();
+  MyTemplatePageState createState() => MyTemplatePageState();
 }
 
-class MyTamplatViewPageState extends State<MyTamplatViewPage> {
+class MyTemplatePageState extends State<MyTemplatePage> {
   TextEditingController mySearch = TextEditingController();
   String changeSearch;
   @override
@@ -51,7 +55,7 @@ class MyTamplatViewPageState extends State<MyTamplatViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: UIGlobal.myScafState,
-      appBar: MyAppBar.myAppBar(this),
+      appBar: widget.showAppBar ? MyAppBar.myAppBar(this) : false,
       body: Stack(
         children: [
           Align(
@@ -129,7 +133,8 @@ class MyTamplatViewPageState extends State<MyTamplatViewPage> {
               borderStyle: true,
             ),
           ),
-          Align(alignment: Alignment.centerLeft, child: MyMenuWidget())
+          if (widget.showMenu)
+            Align(alignment: Alignment.centerLeft, child: MyMenuWidget())
         ],
       ),
     );

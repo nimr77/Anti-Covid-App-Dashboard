@@ -218,6 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalPrice" : MessageLookupByLibrary.simpleMessage("Total price"),
     "totalUploads" : MessageLookupByLibrary.simpleMessage("Total uploads"),
     "unTitled" : MessageLookupByLibrary.simpleMessage("Untitled"),
+    "uploadDate" : MessageLookupByLibrary.simpleMessage("Upload date"),
     "uploadingImage" : MessageLookupByLibrary.simpleMessage("Uploading image"),
     "user2Password" : MessageLookupByLibrary.simpleMessage("Confirm the password"),
     "userAlreadyInDB" : MessageLookupByLibrary.simpleMessage("Sorry, The user already in, Please try to login or forget password"),

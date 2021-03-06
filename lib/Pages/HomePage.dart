@@ -31,7 +31,7 @@ class _MyUsersPageState extends State<MyUsersPage> {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 500),
-      child: MyTamplatViewPage(
+      child: MyTemplatePage(
         key: ValueKey(loading),
         title: Text(
           "Users",

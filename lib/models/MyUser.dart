@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/models/MyNeabyUsers.dart';
 import 'package:fst_anti_covid_project/models/Person.dart';
 
 class MyUser implements Person {
@@ -97,27 +98,31 @@ class MyUser implements Person {
 class UserUploads {
   int when;
   String userId;
+  List contactsNearby;
 
   //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   UserUploads({
     @required this.when,
     @required this.userId,
+    @required this.contactsNearby,
   });
 
   UserUploads copyWith({
     int when,
     String userId,
+    List contactsNearby,
   }) {
     return new UserUploads(
       when: when ?? this.when,
       userId: userId ?? this.userId,
+      contactsNearby: contactsNearby ?? this.contactsNearby,
     );
   }
 
   @override
   String toString() {
-    return 'UserUploads{when: $when, userId: $userId}';
+    return 'UserUploads{when: $when, userId: $userId, contactsNearby: $contactsNearby}';
   }
 
   @override
@@ -126,15 +131,17 @@ class UserUploads {
       (other is UserUploads &&
           runtimeType == other.runtimeType &&
           when == other.when &&
-          userId == other.userId);
+          userId == other.userId &&
+          contactsNearby == other.contactsNearby);
 
   @override
-  int get hashCode => when.hashCode ^ userId.hashCode;
+  int get hashCode => when.hashCode ^ userId.hashCode ^ contactsNearby.hashCode;
 
   factory UserUploads.fromMap(Map<String, dynamic> map) {
     return new UserUploads(
       when: map['when'] as int,
       userId: map['userId'] as String,
+      contactsNearby: map['contactsNearby'] as List,
     );
   }
 
@@ -143,12 +150,15 @@ class UserUploads {
     return {
       'when': this.when,
       'userId': this.userId,
+      'contactsNearby': this.contactsNearby,
     } as Map<String, dynamic>;
   }
 
   //</editor-fold>
 
   static final listOfMe = <UserUploads>[];
+  List<MyNearbyUser> getContactUsers() =>
+      [for (final x in contactsNearby) MyNearbyUser.fromMap(x)];
 }
 // class MyUser {
 //   String id;

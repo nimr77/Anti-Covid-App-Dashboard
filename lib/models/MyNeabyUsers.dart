@@ -76,7 +76,7 @@ class MyNearbyUser implements Person {
 
   factory MyNearbyUser.fromMap(Map<String, dynamic> map) {
     return new MyNearbyUser(
-      id: map['id'] as String,
+      id: map['UserId'] as String,
       lastDetect: map['lastDetect'] as Map<String, double>,
       address: map['address'] as String,
       email: map['email'] as String,

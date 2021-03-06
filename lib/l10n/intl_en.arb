@@ -225,5 +225,6 @@
   "sendNotifications": "Send notifications",
   "totalUploads": "Total uploads",
   "totalNumberOfScans": "Total number of scans",
-  "lastTimeBeenScanned": "Last time been scanned"
+  "lastTimeBeenScanned": "Last time been scanned",
+  "uploadDate": "Upload date"
 }

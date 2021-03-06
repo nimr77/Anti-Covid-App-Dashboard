@@ -2214,6 +2214,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Upload date`
+  String get uploadDate {
+    return Intl.message(
+      'Upload date',
+      name: 'uploadDate',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

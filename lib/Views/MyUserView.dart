@@ -8,6 +8,8 @@ import 'package:fst_anti_covid_project/Widgets/MyButtons.dart';
 import 'package:fst_anti_covid_project/generated/l10n.dart';
 import 'package:fst_anti_covid_project/models/MyUser.dart';
 
+import 'UploadView.dart';
+
 ///View
 ///name
 ///phone
@@ -117,17 +119,7 @@ class _MyUserViewState extends State<MyUserView> {
                         tag: "${x.userId}: ${x.when}",
                         child: OutlinedButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Hero(
-                                            tag: "${x.userId}: ${x.when}",
-                                            child: Container(
-                                              width: 200,
-                                              height: 200,
-                                              color: Colors.transparent,
-                                            ),
-                                          )));
+                              UploadView.getAsDialog(context, x);
                             },
                             child: Text(MyValidatorString.showGoodTime(
                                 DateTime.fromMillisecondsSinceEpoch(x.when)))),

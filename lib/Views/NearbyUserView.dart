@@ -99,7 +99,7 @@ class NearByUsersList extends StatelessWidget {
               MySingleNearbyUserView(
                 myNearbyUser: myNearByUsers[index],
               ),
-              Divider()
+              if (myNearByUsers.length - 1 > index) Divider()
             ],
           )),
       itemCount: myNearByUsers.length,

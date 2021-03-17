@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../Util/GeneralUtil.dart';
 import '../generated/l10n.dart';
 import 'DashboardWidgets.dart';
-import 'GlobalUI.dart';
 import 'InputWidgets.dart';
 import 'MyAppBar.dart';
 
@@ -39,10 +38,10 @@ class MyTemplatePageState extends State<MyTemplatePage> {
   TextEditingController mySearch = TextEditingController();
   bool showMenu;
   String changeSearch;
+  final myScaf = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-    UIGlobal.myScafState = GlobalKey<ScaffoldState>();
   }
 
   @override
@@ -53,12 +52,14 @@ class MyTemplatePageState extends State<MyTemplatePage> {
 
   @override
   Widget build(BuildContext context) {
-    showMenu = MediaQuery.of(context).size.width > 450;
+    showMenu = MediaQuery.of(context).size.width > 500;
+
     return Scaffold(
-      key: UIGlobal.myScafState,
+      key: myScaf,
       drawer: MyMenuWidget(),
       appBar: widget.showAppBar
-          ? MyAppBar.myAppBar(this, () => UIGlobal.myScafState.currentState)
+          ? MyAppBar.myAppBar(this, () => myScaf.currentState,
+              showMenu: showMenu)
           : null,
       body: Stack(
         children: [

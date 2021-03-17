@@ -45,91 +45,94 @@ class _MyUserViewState extends State<MyUserView> {
                   blurRadius: 10,
                   spreadRadius: 10)
             ]),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 80,
-              child: ListTile(
-                leading: IconButton(
-                  onPressed: () {
-                    // notification body
-                  },
-                  icon: Icon(
-                    Icons.notifications,
-                    color: Colors.grey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 80,
+                child: ListTile(
+                  leading: IconButton(
+                    onPressed: () {
+                      // notification body
+                    },
+                    icon: Icon(
+                      Icons.notifications,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  title: Text(this.widget.myUser.name),
+                  trailing: SimpleActionButton(
+                    elevation: 0,
+                    width: 100,
+                    height: 30,
+                    isLoading: widget.myUser.isLoading,
+                    onTap: () {
+                      NearbyUsersControllers.getUploadsForUser(widget.myUser)
+                          .then((value) {
+                        setState(() {});
+                      });
+                      setState(() {});
+                    },
+                    child: Center(child: Text(S.of(context).getUploads)),
+                  ),
+                  subtitle: SizedBox(
+                    height: 80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SelectableText(
+                          "${S.of(context).userPhone}: ${this.widget.myUser.phoneNumber ?? " - "}",
+                          maxLines: 1,
+                        ),
+                        SelectableText(
+                          "${S.of(context).userEmail} ${this.widget.myUser.email ?? " - "}",
+                          maxLines: 1,
+                        ),
+                        SelectableText(
+                          this.widget.myUser.address ?? "-",
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                title: Text(this.widget.myUser.name),
-                trailing: SimpleActionButton(
-                  elevation: 0,
-                  width: 100,
-                  height: 30,
-                  isLoading: widget.myUser.isLoading,
-                  onTap: () {
-                    NearbyUsersControllers.getUploadsForUser(widget.myUser)
-                        .then((value) {
-                      setState(() {});
-                    });
-                    setState(() {});
-                  },
-                  child: Center(child: Text(S.of(context).getUploads)),
-                ),
-                subtitle: SizedBox(
-                  height: 80,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              if (NearbyUsersControllers.getForThisUserUploads(widget.myUser.id)
+                  .isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     children: [
-                      SelectableText(
-                        "${S.of(context).userPhone}: ${this.widget.myUser.phoneNumber ?? " - "}",
-                        maxLines: 1,
-                      ),
-                      SelectableText(
-                        "${S.of(context).userEmail} ${this.widget.myUser.email ?? " - "}",
-                        maxLines: 1,
-                      ),
-                      SelectableText(
-                        this.widget.myUser.address ?? "-",
-                        maxLines: 1,
-                      ),
+                      Text(
+                          "${S.of(context).totalUploads}: ${NearbyUsersControllers.getForThisUserUploads(widget.myUser.id).length}"),
                     ],
                   ),
                 ),
-              ),
-            ),
-            if (NearbyUsersControllers.getForThisUserUploads(widget.myUser.id)
-                .isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(
-                        "${S.of(context).totalUploads}: ${NearbyUsersControllers.getForThisUserUploads(widget.myUser.id).length}"),
-                  ],
-                ),
-              ),
-            Wrap(
-              children: [
-                for (final x in NearbyUsersControllers.getForThisUserUploads(
-                    widget.myUser.id))
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ShowUpAnimation(
-                      child: Hero(
-                        tag: "${x.userId}: ${x.when}",
-                        child: OutlinedButton(
-                            onPressed: () {
-                              UploadView.getAsDialog(context, x);
-                            },
-                            child: Text(MyValidatorString.showGoodTime(
-                                DateTime.fromMillisecondsSinceEpoch(x.when)))),
+              Wrap(
+                children: [
+                  for (final x in NearbyUsersControllers.getForThisUserUploads(
+                      widget.myUser.id))
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ShowUpAnimation(
+                        child: Hero(
+                          tag: "${x.userId}: ${x.when}",
+                          child: OutlinedButton(
+                              onPressed: () {
+                                UploadView.getAsDialog(context, x);
+                              },
+                              child: Text(MyValidatorString.showGoodTime(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      x.when)))),
+                        ),
                       ),
                     ),
-                  ),
-                // three dots
-              ],
-            )
-          ],
+                  // three dots
+                ],
+              )
+            ],
+          ),
         ),
       ),
       borderRadius: BorderRadius.circular(10),

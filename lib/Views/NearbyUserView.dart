@@ -52,22 +52,24 @@ class _MySingleNearbyUserViewState extends State<MySingleNearbyUserView> {
             ? SpinKitCubeGrid(
                 color: Colors.grey,
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // the person view
-                  MyPersonView(
-                    person: widget.myNearbyUser,
-                  ),
-                  // total number of contact
-                  Text(
-                      "${S.of(context).totalNumberOfScans}: ${widget.myNearbyUser.myScanned().length}"),
-                  // last time been scanned
-                  if (widget.myNearbyUser.myScanned().isNotEmpty)
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // the person view
+                    MyPersonView(
+                      person: widget.myNearbyUser,
+                    ),
+                    // total number of contact
                     Text(
-                        "${S.of(context).lastTimeBeenScanned}: ${MyValidatorString.showGoodTime(DateTime.parse(widget.myNearbyUser.myScanned().last.whenBeenScanned))}")
-                ],
+                        "${S.of(context).totalNumberOfScans}: ${widget.myNearbyUser.myScanned().length}"),
+                    // last time been scanned
+                    if (widget.myNearbyUser.myScanned().isNotEmpty)
+                      Text(
+                          "${S.of(context).lastTimeBeenScanned}: ${MyValidatorString.showGoodTime(DateTime.parse(widget.myNearbyUser.myScanned().last.whenBeenScanned))}")
+                  ],
+                ),
               ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/main.dart';
 
 import '../Util/GeneralUtil.dart';
 import 'DashboardWidgets.dart';
@@ -10,7 +11,8 @@ import 'DashboardWidgets.dart';
 
 class MyAppBar {
   static int selectedIndex = 0;
-  static PreferredSize myAppBar(State thisState,
+  static PreferredSize myAppBar(
+      State thisState, ScaffoldState Function() scaffoldState,
       {Color myColor = Colors.white, bool showHome = false}) {
     MyMenuItem.initMenu(thisState);
     return PreferredSize(
@@ -22,9 +24,21 @@ class MyAppBar {
         leading: !showHome
             ? InkWell(
                 onTap: () {
-                  thisState.setState(() {
-                    MyMenu.showFullMenu = !MyMenu.showFullMenu;
-                  });
+                  if (MediaQuery.of(MyApp.myStateNavigator.currentContext)
+                          .size
+                          .width >
+                      450)
+                    thisState.setState(() {
+                      MyMenu.showFullMenu = !MyMenu.showFullMenu;
+                    });
+                  else {
+                    if (!scaffoldState().isDrawerOpen) {
+                      MyMenu.showFullMenu = true;
+                      scaffoldState().openDrawer();
+                    } else {
+                      scaffoldState().openEndDrawer();
+                    }
+                  }
                 },
                 child: Icon(
                   MyMenu.showFullMenu

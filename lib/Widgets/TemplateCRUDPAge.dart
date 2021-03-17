@@ -37,6 +37,7 @@ class MyTemplatePage extends StatefulWidget {
 
 class MyTemplatePageState extends State<MyTemplatePage> {
   TextEditingController mySearch = TextEditingController();
+  bool showMenu;
   String changeSearch;
   @override
   void initState() {
@@ -52,9 +53,13 @@ class MyTemplatePageState extends State<MyTemplatePage> {
 
   @override
   Widget build(BuildContext context) {
+    showMenu = MediaQuery.of(context).size.width > 450;
     return Scaffold(
       key: UIGlobal.myScafState,
-      appBar: widget.showAppBar ? MyAppBar.myAppBar(this) : null,
+      drawer: MyMenuWidget(),
+      appBar: widget.showAppBar
+          ? MyAppBar.myAppBar(this, () => UIGlobal.myScafState.currentState)
+          : null,
       body: Stack(
         children: [
           Align(
@@ -132,7 +137,7 @@ class MyTemplatePageState extends State<MyTemplatePage> {
               borderStyle: true,
             ),
           ),
-          if (widget.showMenu)
+          if (widget.showMenu && this.showMenu)
             Align(alignment: Alignment.centerLeft, child: MyMenuWidget())
         ],
       ),

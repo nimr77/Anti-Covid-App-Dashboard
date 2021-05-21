@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fst_anti_covid_project/Widgets/DashboardWidgets.dart';
 
 import 'Pages/LoadingPage.dart';
 import 'Routes/Paths.dart' as routes;

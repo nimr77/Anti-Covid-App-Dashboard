@@ -6,29 +6,32 @@ import 'package:fst_anti_covid_project/Pages/IndexingPage.dart';
 import 'package:fst_anti_covid_project/Pages/LoadingPage.dart';
 import 'package:fst_anti_covid_project/Pages/LoginPage.dart';
 import 'package:fst_anti_covid_project/Server/AuthServer.dart';
-import 'package:fst_anti_covid_project/Server/FirebaseApp.dart';
+import 'package:fst_anti_covid_project/Service/FirebaseApp.dart';
+import 'package:fst_anti_covid_project/Widgets/Models/Menu.dart';
 import 'package:page_transition/page_transition.dart';
 
-class Path {
-  const Path(this.pattern, this.builder);
+class MyRoute {
+  const MyRoute(this.pattern, this.builder);
   static String requestedPage = MyUsersPage.route;
   final String pattern;
   final Widget Function(BuildContext, String) builder;
-  static List<Path> paths = [
-    Path(
+  static List<MyRoute> paths = [
+    MyRoute(
       r'^' + MyLoadingPage.route,
       (context, match) => MyLoadingPage(),
     ),
-    Path(
+    MyRoute(
       r'^' + MyUsersPage.route,
       (context, match) => MyUsersPage(),
     ),
-    Path(
+    MyRoute(
       r'^' + IndexingPage.route,
       (context, match) => IndexingPage(
         whileIndexing: () async {
           await Future.delayed(Duration(milliseconds: 500));
-          if (MyFirebaseApp.app == null) await MyFirebaseApp.initFirebase();
+          MenuItemSmall.initMenu();
+
+          if (MyFirebaseApp.app == null) await MyFirebaseApp.initApp();
           Widget? t;
           if (MyAuthServer.myUser == null) {
             await MyAuthServer.autoLogin();
@@ -49,13 +52,15 @@ class Path {
   ];
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     late Widget child;
-    for (Path path in paths) {
+    for (MyRoute path in paths) {
       final regExpPattern = RegExp(path.pattern);
       if (regExpPattern.hasMatch(settings.name!)) {
         final firstMatch = regExpPattern.firstMatch(settings.name!);
-        final match =
+        String? match =
             (firstMatch!.groupCount == 1) ? firstMatch.group(1) : null;
-
+        if (match == null) {
+          match = IndexingPage.route;
+        }
         child =
             path.builder(MyAppControllers.appNavigator.currentContext!, match!);
         break;
@@ -71,7 +76,7 @@ class Path {
     return PageTransition(
         child: IndexingPage(whileIndexing: () async {
           // init firebase
-          if (MyFirebaseApp.app == null) await MyFirebaseApp.initFirebase();
+          if (MyFirebaseApp.app == null) await MyFirebaseApp.initApp();
           Widget? t;
           if (MyAuthServer.myUser == null) {
             await MyAuthServer.autoLogin();
@@ -82,7 +87,7 @@ class Path {
           // navigate and check
           MyAppControllers.appNavigator.currentState!
               .pushReplacement(PageTransition(
-            child: t ?? (child ?? MyUsersPage()),
+            child: t ?? (child),
             type: PageTransitionType.fade,
             settings: settings,
             duration: Duration(milliseconds: 700),

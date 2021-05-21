@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fst_anti_covid_project/Controllers/MyAppControllers.dart';
+import 'package:fst_anti_covid_project/Pages/IndexingPage.dart';
 
-import 'Pages/LoadingPage.dart';
-import 'Routes/Paths.dart' as routes;
-import 'Service/FirebaseApp.dart';
+import 'Routes/Paths.dart';
 import 'Style/MyTextStyle.dart';
-import 'Widgets/Models/Menu.dart';
 import 'generated/l10n.dart';
 
 void main() {
@@ -13,12 +12,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static GlobalKey<NavigatorState> myStateNavigator =
-      GlobalKey<NavigatorState>();
-  MyApp() {
-    MyFirebaseApp.initApp();
-    MenuItemSmall.initMenu();
-  }
+  // MyApp() {
+  //   // MyFirebaseApp.initApp();
+  //   MenuItemSmall.initMenu();
+  // }
   @override
   Widget build(BuildContext context) => MaterialApp(
         locale: Locale('en'),
@@ -27,12 +24,12 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: S.delegate.supportedLocales,
         // home: MyLoadingPage(),
-        initialRoute: MyLoadingPage.route,
-        onGenerateRoute: routes.Path.onGenerateRoute,
+        initialRoute: IndexingPage.route,
+        onGenerateRoute: MyRoute.onGenerateRoute,
         debugShowCheckedModeBanner: false,
         title: "Dashboard",
         color: Colors.purple[700],
-        navigatorKey: myStateNavigator,
+        navigatorKey: MyAppControllers.appNavigator,
         theme: ThemeData(
             fontFamily: 'Poppins',
             primaryColor: Colors.deepOrange[800],

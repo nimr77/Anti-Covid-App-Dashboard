@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:firebase/firebase.dart';
 import 'package:fst_anti_covid_project/Config/APIKeys.dart';
+import 'package:fst_anti_covid_project/Server/AuthServer.dart';
 import 'package:fst_anti_covid_project/models/MyUser.dart';
 
 class MyFirebaseApp {
+  static App? _app;
+  static Auth? _myAuth;
+  static late Storage _storage;
   static initApp() {
     initializeApp(
         apiKey: ApiKeys,
@@ -12,6 +18,10 @@ class MyFirebaseApp {
         storageBucket: "secondtry-413fb.appspot.com",
         messagingSenderId: "425353693154",
         appId: "1:425353693154:web:94bc655dae846124415bbb");
+
+    _myAuth = auth();
+    _storage = storage();
+    MyAuthServer.init();
   }
 
   static Database db = database();
@@ -19,6 +29,21 @@ class MyFirebaseApp {
   static final usersInfoRef = _usersRef.child('UsersInfo');
   static final usersUploadRef = _usersRef.child('UsersUpload');
   static final usersNotificationsRef = _usersRef.child('UsersNotifications');
+  static App? get app => _app;
+
+  static Auth? get myAuth => _myAuth;
+
+  static Future<Uri> uploadFile(String path, File? file) async {
+    var up = _storage.ref(path).put(file);
+    // create task
+    var f = await up.future;
+    return await f.ref.getDownloadURL();
+  }
+
+  static Future<void> removeFile(String path) async =>
+      _storage.ref(path).delete().catchError((e) {
+        print(e);
+      });
 
   /// this will load the first 30
   static Future loadingUsers([int maxLimit = 30]) async {

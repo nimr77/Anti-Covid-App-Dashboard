@@ -1,7 +1,7 @@
 import 'package:firebase/firebase.dart';
 import 'package:fst_anti_covid_project/Controllers/MyAppControllers.dart';
-import 'package:fst_anti_covid_project/Routes/MyRoutes.dart';
-import 'package:fst_anti_covid_project/Server/FirebaseApp.dart';
+import 'package:fst_anti_covid_project/Routes/Paths.dart';
+import 'package:fst_anti_covid_project/Service/FirebaseApp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAuthServer {
@@ -42,7 +42,7 @@ class MyAuthServer {
   static Future<bool> loginAndNavigate(String email, String password) async {
     if (await login(email, password)) {
       MyAppControllers.appNavigator.currentState!
-          .pushReplacementNamed(MyPath.requestedPage!);
+          .pushReplacementNamed(MyRoute.requestedPage);
       return true;
     }
     return false;

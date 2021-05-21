@@ -11,7 +11,7 @@ import 'package:fst_anti_covid_project/models/MyUser.dart';
 class UploadView extends StatefulWidget {
   final UserUploads userUploads;
 
-  const UploadView({Key key, this.userUploads}) : super(key: key);
+  const UploadView({Key? key, required this.userUploads}) : super(key: key);
 
   @override
   _UploadViewState createState() => _UploadViewState();
@@ -30,7 +30,6 @@ class _UploadViewState extends State<UploadView> {
     return MyTemplatePage(
         showMenu: false,
         showAppBar: false,
-        useSearchIcon: true,
         searchText: search,
         onSearch: (str) {
           setState(() {

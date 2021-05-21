@@ -37,7 +37,6 @@ class _MyUsersPageState extends State<MyUsersPage> {
           "Users",
           style: Theme.of(context).textTheme.headline3,
         ),
-        useSearchIcon: true,
         searchText: search,
         onSearch: (str) {
           setState(() {

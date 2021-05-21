@@ -3,10 +3,9 @@ import 'package:fst_anti_covid_project/Config/APIKeys.dart';
 import 'package:fst_anti_covid_project/models/MyUser.dart';
 
 class MyFirebaseApp {
-  static String lastUserKey;
   static initApp() {
     initializeApp(
-        apiKey: MyAPIKeys.ApiKeys,
+        apiKey: ApiKeys,
         authDomain: "secondtry-413fb.firebaseapp.com",
         databaseURL: "https://secondtry-413fb.firebaseio.com",
         projectId: "secondtry-413fb",
@@ -24,17 +23,12 @@ class MyFirebaseApp {
   /// this will load the first 30
   static Future loadingUsers([int maxLimit = 30]) async {
     var q = usersInfoRef.limitToFirst(maxLimit);
-    if (lastUserKey == null) {
-      q = q.startAt(lastUserKey);
-    }
     var snap = await q.once('value');
     Map data = snap.snapshot.val();
     data.forEach((key, value) {
       final t = <String, dynamic>{'id': key};
       t.addAll(value['data']);
-      print(value['data']);
       MyUser.listOfMe.add(MyUser.fromMap(t));
-      lastUserKey = key;
     });
   }
 }

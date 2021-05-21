@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-import '../Style/MyTextStyle.dart';
-import '../Util/GeneralUtil.dart';
-
 class MyAddingDialog {
   Widget child;
-  String title;
-  double height;
-  double width;
+  String? title;
+  double? height;
+  double? width;
   MyAddingDialog({
-    @required this.child,
+    required this.child,
     this.height,
     this.width,
     this.title,
@@ -19,15 +16,19 @@ class MyAddingDialog {
   Future showMyDialog(BuildContext context) => showCupertinoDialog(
       context: context,
       builder: (context) => SimpleDialog(
-            titlePadding: title != null ? null : EdgeInsets.only(right: 8),
+            titlePadding: title != null
+                ? EdgeInsets.only(left: 8, bottom: 8)
+                : EdgeInsets.only(right: 8),
             title: title != null
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        title,
-                        style: MyTextStyle.simpleTitleTextStyle(
-                            myColor: Colors.black),
+                        title!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: Colors.black87),
                       ),
                       IconButton(
                           icon: Icon(
@@ -58,8 +59,8 @@ class MyAddingDialog {
                 borderRadius: BorderRadius.circular(5)),
             children: [
               Container(
-                width: width ?? MyUtil.getContextWidth(context) * 0.9,
-                height: height ?? MyUtil.getContextHeight(context) * 0.9,
+                width: width ?? MediaQuery.of(context).size.width * 0.9,
+                height: height ?? MediaQuery.of(context).size.height * 0.9,
                 child: this.child,
               )
             ],

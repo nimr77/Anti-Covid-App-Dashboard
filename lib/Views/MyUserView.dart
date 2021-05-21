@@ -1,14 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:fst_anti_covid_project/Controllers/MyNearByControllers.dart';
-import 'package:fst_anti_covid_project/Functions/ValidateStrings.dart';
-import 'package:fst_anti_covid_project/Widgets/CustomWidgets.dart';
 import 'package:fst_anti_covid_project/Widgets/MyButtons.dart';
+import 'package:fst_anti_covid_project/Widgets/TableView.dart';
 import 'package:fst_anti_covid_project/generated/l10n.dart';
 import 'package:fst_anti_covid_project/models/MyUser.dart';
-
-import 'UploadView.dart';
 
 ///View
 ///name
@@ -22,7 +17,7 @@ import 'UploadView.dart';
 class MyUserView extends StatefulWidget {
   final MyUser myUser;
 
-  const MyUserView({Key key, this.myUser}) : super(key: key);
+  const MyUserView({Key? key, required this.myUser}) : super(key: key);
 
   @override
   _MyUserViewState createState() => _MyUserViewState();
@@ -109,28 +104,6 @@ class _MyUserViewState extends State<MyUserView> {
                     ],
                   ),
                 ),
-              Wrap(
-                children: [
-                  for (final x in NearbyUsersControllers.getForThisUserUploads(
-                      widget.myUser.id))
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ShowUpAnimation(
-                        child: Hero(
-                          tag: "${x.userId}: ${x.when}",
-                          child: OutlinedButton(
-                              onPressed: () {
-                                UploadView.getAsDialog(context, x);
-                              },
-                              child: Text(MyValidatorString.showGoodTime(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      x.when)))),
-                        ),
-                      ),
-                    ),
-                  // three dots
-                ],
-              )
             ],
           ),
         ),
@@ -143,25 +116,14 @@ class _MyUserViewState extends State<MyUserView> {
 class ListUsersInDatabase extends StatelessWidget {
   final List<MyUser> myUsers;
 
-  const ListUsersInDatabase({Key key, this.myUsers}) : super(key: key);
+  const ListUsersInDatabase({Key? key, required this.myUsers})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: Wrap(
-        children: [
-          for (final x in this.myUsers)
-            ShowUpAnimation(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MyUserView(
-                  key: ValueKey(x.id),
-                  myUser: x,
-                ),
-              ),
-            )
-        ],
-      ),
-    );
+    return TableViewObject(
+        list: [for (final x in myUsers) x.toMap()],
+        keys: ['name', 'phoneNumber', 'address'],
+        titles: ['Name', 'Phone', 'Address']);
   }
 }

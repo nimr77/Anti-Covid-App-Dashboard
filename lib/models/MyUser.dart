@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fst_anti_covid_project/Controllers/MyNearByControllers.dart';
 import 'package:fst_anti_covid_project/models/MyNeabyUsers.dart';
 import 'package:fst_anti_covid_project/models/Person.dart';
@@ -16,21 +15,21 @@ class MyUser implements Person {
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   MyUser({
-    @required this.id,
-    @required this.name,
-    @required this.email,
-    @required this.phoneNumber,
-    @required this.token,
-    @required this.address,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phoneNumber,
+    required this.token,
+    required this.address,
   });
 
   MyUser copyWith({
-    String id,
-    String name,
-    String email,
-    String phoneNumber,
-    String token,
-    String address,
+    required String id,
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required String token,
+    required String address,
   }) {
     return new MyUser(
       id: id ?? this.id,
@@ -104,15 +103,15 @@ class UserUploads {
   //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   UserUploads({
-    @required this.when,
-    @required this.userId,
-    @required this.contactsNearby,
+    required this.when,
+    required this.userId,
+    required this.contactsNearby,
   });
 
   UserUploads copyWith({
-    int when,
-    String userId,
-    List contactsNearby,
+    required int when,
+    required String userId,
+    required List contactsNearby,
   }) {
     return new UserUploads(
       when: when ?? this.when,

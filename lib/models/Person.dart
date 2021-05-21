@@ -1,7 +1,7 @@
-class Person {
-  String name;
-  String phoneNumber;
-  String address;
-  String email;
-  String id;
+abstract class Person {
+  late String name;
+  late String phoneNumber;
+  late String address;
+  late String email;
+  late String id;
 }

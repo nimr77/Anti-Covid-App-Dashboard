@@ -7,8 +7,8 @@ class MySnackBars {
       {int forSecond = 3,
       Color backgroundColor = Colors.red,
       Color actionColor = Colors.white,
-      Function() onOK}) {
-    myScaffoldKey.currentState.showSnackBar(SnackBar(
+      Function()? onOK}) {
+    myScaffoldKey.currentState!.showSnackBar(SnackBar(
       content: Text(
         message,
         style: TextStyle(
@@ -21,7 +21,7 @@ class MySnackBars {
           label: "Ok",
           textColor: actionColor,
           onPressed: () {
-            myScaffoldKey.currentState.hideCurrentSnackBar();
+            myScaffoldKey.currentState!.hideCurrentSnackBar();
             if (onOK != null) onOK();
           }),
     ));

@@ -5,7 +5,7 @@ import 'package:fst_anti_covid_project/models/Person.dart';
 class MyPersonView extends StatefulWidget {
   final Person person;
 
-  const MyPersonView({Key key, this.person}) : super(key: key);
+  const MyPersonView({Key? key, required this.person}) : super(key: key);
 
   @override
   _MyPersonViewState createState() => _MyPersonViewState();

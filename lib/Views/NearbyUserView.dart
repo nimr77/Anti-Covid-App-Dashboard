@@ -18,7 +18,8 @@ import 'PersonView.dart';
 class MySingleNearbyUserView extends StatefulWidget {
   final MyNearbyUser myNearbyUser;
 
-  const MySingleNearbyUserView({Key key, this.myNearbyUser}) : super(key: key);
+  const MySingleNearbyUserView({Key? key, required this.myNearbyUser})
+      : super(key: key);
 
   @override
   _MySingleNearbyUserViewState createState() => _MySingleNearbyUserViewState();

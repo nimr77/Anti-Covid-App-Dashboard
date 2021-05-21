@@ -6,6 +6,7 @@ import 'Pages/LoadingPage.dart';
 import 'Routes/Paths.dart' as routes;
 import 'Service/FirebaseApp.dart';
 import 'Style/MyTextStyle.dart';
+import 'Widgets/Models/Menu.dart';
 import 'generated/l10n.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       GlobalKey<NavigatorState>();
   MyApp() {
     MyFirebaseApp.initApp();
-    MenuElement.initMyMenu();
+    MenuItemSmall.initMenu();
   }
   @override
   Widget build(BuildContext context) => MaterialApp(

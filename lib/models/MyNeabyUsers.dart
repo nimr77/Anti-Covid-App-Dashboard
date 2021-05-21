@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fst_anti_covid_project/models/Person.dart';
 
 class MyNearbyUser implements Person {
@@ -23,21 +22,21 @@ class MyNearbyUser implements Person {
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   MyNearbyUser({
-    @required this.id,
-    @required this.lastDetect,
-    @required this.address,
-    @required this.email,
-    @required this.name,
-    @required this.phoneNumber,
+    required this.id,
+    required this.lastDetect,
+    required this.address,
+    required this.email,
+    required this.name,
+    required this.phoneNumber,
   });
 
   MyNearbyUser copyWith({
-    String id,
-    Map lastDetect,
-    String address,
-    String email,
-    String name,
-    String phoneNumber,
+    required String id,
+    required Map lastDetect,
+    required String address,
+    required String email,
+    required String name,
+    required String phoneNumber,
   }) {
     return new MyNearbyUser(
       id: id ?? this.id,
@@ -114,19 +113,19 @@ class MyNearbyScanned {
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   MyNearbyScanned({
-    @required this.userId,
-    @required this.location,
-    @required this.distance,
-    @required this.whenBeenScanned,
-    @required this.forHowLong,
+    required this.userId,
+    required this.location,
+    required this.distance,
+    required this.whenBeenScanned,
+    required this.forHowLong,
   });
 
   MyNearbyScanned copyWith({
-    String userId,
-    String location,
-    String distance,
-    String whenBeenScanned,
-    int forHowLong,
+    required String userId,
+    required String location,
+    required String distance,
+    required String whenBeenScanned,
+    required int forHowLong,
   }) {
     return new MyNearbyScanned(
       userId: userId ?? this.userId,

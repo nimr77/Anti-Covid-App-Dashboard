@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 
-import '../Util/GeneralUtil.dart';
-import '../generated/l10n.dart';
-import 'DashboardWidgets.dart';
-import 'InputWidgets.dart';
-import 'MyAppBar.dart';
+import './NewAppBar.dart';
+import 'CardWidget.dart';
+import 'Models/Menu.dart';
 
 class MyTemplatePage extends StatefulWidget {
   final Widget title;
-  final Function() onAdding;
-  final Function(String) onSearch;
+  final Function()? onAdding;
+  final Function(String)? onSearch;
   final Widget child;
-  final List<Widget> muilti;
-  final bool useSearchIcon;
-  final String searchText;
+  final List<Widget>? muilti;
+  final String? searchText;
   final bool useScrolling;
   final bool showMenu;
   final bool showAppBar;
+  final bool useGlobalKey;
+  final PreferredSize? preferredSizeAppBar;
+  final List<Widget>? inTheRow;
+  final bool useAdminAppBar;
   MyTemplatePage(
-      {@required this.title,
-      @required this.child,
-      this.showMenu = true,
+      {required this.title,
+      required this.child,
+      this.useAdminAppBar = false,
+      this.showMenu = false,
       this.showAppBar = true,
       this.muilti,
       this.onAdding,
       this.onSearch,
-      this.useSearchIcon = false,
       this.searchText,
       this.useScrolling = true,
-      key})
+      this.useGlobalKey = true,
+      this.inTheRow,
+      key,
+      this.preferredSizeAppBar})
       : super(key: key);
   @override
   MyTemplatePageState createState() => MyTemplatePageState();
@@ -36,9 +40,7 @@ class MyTemplatePage extends StatefulWidget {
 
 class MyTemplatePageState extends State<MyTemplatePage> {
   TextEditingController mySearch = TextEditingController();
-  bool showMenu;
-  String changeSearch;
-  final myScaf = GlobalKey<ScaffoldState>();
+  String? changeSearch;
   @override
   void initState() {
     super.initState();
@@ -52,14 +54,17 @@ class MyTemplatePageState extends State<MyTemplatePage> {
 
   @override
   Widget build(BuildContext context) {
-    showMenu = MediaQuery.of(context).size.width > 500;
-
     return Scaffold(
-      key: myScaf,
-      drawer: MyMenuWidget(),
       appBar: widget.showAppBar
-          ? MyAppBar.myAppBar(this, () => myScaf.currentState,
-              showMenu: showMenu)
+          ? (widget.preferredSizeAppBar != null
+              ? widget.preferredSizeAppBar
+              : MyNewAppBar(
+                  Size(MediaQuery.of(context).size.width, 50),
+                  MenuItemSmall.listOfMe,
+                  MenuItemSmall.selectedIndex,
+                  inTheRow: widget.inTheRow,
+                  isAdmin: widget.useAdminAppBar,
+                ))
           : null,
       body: Stack(
         children: [
@@ -78,46 +83,42 @@ class MyTemplatePageState extends State<MyTemplatePage> {
                         padding: const EdgeInsets.all(8.0),
                         child: widget.title,
                       ),
-                      flex: 3,
+                      flex: 2,
                     ),
                     if (widget.muilti != null)
-                      for (var tB in widget.muilti) Expanded(child: tB),
+                      for (var tB in widget.muilti!) Expanded(child: tB),
                     widget.onAdding != null
-                        ? Expanded(
-                            child: TextButton.icon(
-                                onPressed: () {
-                                  setState(() {
-                                    widget.onAdding();
-                                  });
-                                },
-                                icon: Icon(Icons.add),
-                                label: Container(
-                                  child: Text(
-                                    S.of(context).addNewElement,
-                                    overflow: TextOverflow.fade,
-                                  ),
-                                )),
-                            flex: 2,
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: SizedBox(
+                              child: TextButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.onAdding!();
+                                    });
+                                  },
+                                  icon: Icon(Icons.add),
+                                  label: Container(
+                                    child: Text(
+                                      "No element to view",
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  )),
+                              width: 210,
+                            ),
                           )
                         : Container(),
-                    if (widget.onSearch != null && !widget.useSearchIcon)
-                      Expanded(
-                        child: MyInputWidget.formInputBoxStand(
-                            mySearch, S.of(context).search,
-                            myIcon: Icons.search_outlined),
-                        flex: 2,
-                      ),
-                    if (widget.onSearch != null && widget.useSearchIcon)
+                    if (widget.onSearch != null)
                       Expanded(
                         child: SearchIcon(
-                            height: MyUtil.getContextHeight(context) * 0.1,
-                            width: MyUtil.getContextWidth(context) * 0.07,
+                            height: MediaQuery.of(context).size.height * 0.1,
+                            width: MediaQuery.of(context).size.width * 0.07,
                             searchText: changeSearch,
                             onTextChange: (str) {
                               Future.delayed(
                                   Duration(milliseconds: 200),
                                   () => setState(() {
-                                        widget.onSearch(str);
+                                        widget.onSearch!(str);
                                         changeSearch = str;
                                       }));
                             }),
@@ -132,38 +133,44 @@ class MyTemplatePageState extends State<MyTemplatePage> {
                       child: SingleChildScrollView(child: widget.child),
                     )
                   : widget.child,
-              MyUtil.getContextHeight(context) * 0.9,
-              MyUtil.getContextWidth(context) * 0.935,
+              MediaQuery.of(context).size.height * 0.9,
+              MediaQuery.of(context).size.width,
               borderWidth: 0,
               borderStyle: true,
             ),
           ),
-          if (widget.showMenu && this.showMenu)
-            Align(alignment: Alignment.centerLeft, child: MyMenuWidget())
+          // if (widget.showMenu)
+          //   Align(alignment: Alignment.topLeft, child: MyMenuWidget())
         ],
       ),
     );
   }
 }
 
-class MyMenuWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MyCardWidget(null, MyMenu(), MyUtil.getContextHeight(context) * 0.89,
-        MyMenu.showFullMenu ? 270 : 80);
-  }
-}
+// class MyMenuWidget extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MyCardWidget(
+//       null,
+//       MyMenu(),
+//       MyUtil.getContextHeight(context) * 0.97,
+//       MyMenu.showFullMenu ? 270 : 80,
+//       borderStyle: true,
+//       borderRadius: 0,
+//     );
+//   }
+// }
 
 class SearchIcon extends StatefulWidget {
   final double height;
   final double width;
   final Function(String) onTextChange;
-  final Function(String) onSubmit;
-  final String searchText;
+  final Function(String)? onSubmit;
+  final String? searchText;
   SearchIcon(
-      {@required this.height,
-      @required this.width,
-      @required this.onTextChange,
+      {required this.height,
+      required this.width,
+      required this.onTextChange,
       this.onSubmit,
       this.searchText});
   @override
@@ -172,7 +179,7 @@ class SearchIcon extends StatefulWidget {
 
 class _SearchIconState extends State<SearchIcon> {
   bool showIcon = true;
-  TextEditingController cont;
+  TextEditingController? cont;
   @override
   void initState() {
     cont = TextEditingController(text: widget.searchText);
@@ -182,7 +189,7 @@ class _SearchIconState extends State<SearchIcon> {
   @override
   void setState(fn) {
     super.setState(fn);
-    cont.text = widget.searchText;
+    cont!.text = widget.searchText!;
   }
 
   @override
@@ -201,7 +208,7 @@ class _SearchIconState extends State<SearchIcon> {
                     showIcon = false;
                   });
                 },
-                label: Text(S.of(context).search),
+                label: Text("Search"),
                 icon: Icon(Icons.search_rounded),
               )
             : TextField(
@@ -212,12 +219,43 @@ class _SearchIconState extends State<SearchIcon> {
                 onSubmitted: (str) {
                   setState(() {
                     showIcon = true;
-                    if (widget.onSubmit != null) widget.onSubmit(str);
+                    if (widget.onSubmit != null) widget.onSubmit!(str);
                   });
                 },
                 decoration: InputDecoration(
-                    border: InputBorder.none, hintText: S.of(context).search),
+                    border: InputBorder.none, hintText: "Search"),
               ),
+      ),
+    );
+  }
+}
+
+class NoElementWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.3,
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: Column(
+        children: [
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.error_outline,
+              color: Colors.grey,
+              size: MediaQuery.of(context).size.aspectRatio * 0.2,
+            ),
+          )),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "No Element to show",
+              style: TextStyle(fontSize: 30),
+            ),
+          )),
+        ],
       ),
     );
   }

@@ -6,7 +6,7 @@ import '../main.dart';
 class MyLoadingPage extends StatelessWidget {
   static String route = "/";
   MyLoadingPage() {
-    MyApp.myStateNavigator.currentState.pushNamed(MyUsersPage.route);
+    MyApp.myStateNavigator.currentState!.pushNamed(MyUsersPage.route);
   }
   @override
   Widget build(BuildContext context) {

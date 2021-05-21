@@ -6,7 +6,7 @@ class NearbyUsersControllers {
   static const MaxIDNumber = "GCWXKUUiplXhvAn1559RMcelrBj2".length;
   static List<MyNearbyScanned> getScannedScannedPerDay(
       MyNearbyUser myNearbyUser,
-      {DateTime when}) {
+      {required DateTime when}) {
     return myNearbyUser
         .myScanned()
         .where((element) => element.whenBeenScanned == when.toString())
@@ -16,7 +16,6 @@ class NearbyUsersControllers {
   static Future<List<MyNearbyUser>> getContactsNearbyForThisUserFromUpload(
       UserUploads userUploads) async {
     // secondtry-413fb Users hvnDDlTguKffCcPekVdooDVlqPe2 data 1614780848816 data ContactsNearby 1 MyScanned 3 whenBeenScanned
-    final r = <MyNearbyUser>[];
     var q = MyFirebaseApp.usersUploadRef
         .child(userUploads.userId)
         .child('${userUploads.when}')
@@ -25,10 +24,10 @@ class NearbyUsersControllers {
     var snap = await q.once('value');
     List dat = snap.snapshot.val();
     dat.forEach((element) {
-      var t = element as Map;
+      var t = element as Map<String, dynamic>;
       MyNearbyUser.listOfMe.add(MyNearbyUser.fromMap(t));
     });
-    return null;
+    return MyNearbyUser.listOfMe;
   }
 
   static Future<List<UserUploads>> getUploadsForUser(MyUser myUser) async {
@@ -80,7 +79,7 @@ class NearbyUsersControllers {
     if (myNearbyUser.name == null) {
       var q =
           await MyFirebaseApp.usersInfoRef.child(myNearbyUser.id).once('value');
-      Map data = q.snapshot.val()['data'];
+      Map<String, dynamic> data = q.snapshot.val()['data'];
       myNearbyUser = MyNearbyUser.fromMap(data);
     }
     return myNearbyUser;

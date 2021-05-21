@@ -10,15 +10,16 @@ class MyFirebaseApp {
   static Auth? _myAuth;
   static late Storage _storage;
   static initApp() {
-    initializeApp(
-        apiKey: ApiKeys,
-        authDomain: "secondtry-413fb.firebaseapp.com",
-        databaseURL: "https://secondtry-413fb.firebaseio.com",
-        projectId: "secondtry-413fb",
-        storageBucket: "secondtry-413fb.appspot.com",
-        messagingSenderId: "425353693154",
-        appId: "1:425353693154:web:94bc655dae846124415bbb");
-
+    try {
+      _app = initializeApp(
+          apiKey: ApiKeys,
+          authDomain: "secondtry-413fb.firebaseapp.com",
+          databaseURL: "https://secondtry-413fb.firebaseio.com",
+          projectId: "secondtry-413fb",
+          storageBucket: "secondtry-413fb.appspot.com",
+          messagingSenderId: "425353693154",
+          appId: "1:425353693154:web:94bc655dae846124415bbb");
+    } catch (e) {}
     _myAuth = auth();
     _storage = storage();
     MyAuthServer.init();

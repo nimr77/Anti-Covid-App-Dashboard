@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
           theme: LoginTheme(
             pageColorLight: Colors.white,
           ),
-          logo: "assets/FoodLogo.png",
+          logo: "assets/icon.png",
           onSignup: (_) {},
           onLogin: (loginData) => Future<String?>(() async {
             if (await MyAuthServer.loginAndNavigate(

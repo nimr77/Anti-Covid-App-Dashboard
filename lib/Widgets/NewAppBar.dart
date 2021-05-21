@@ -111,10 +111,11 @@ class _MyNewAppBarWidgetState extends State<_MyNewAppBarWidget>
                                                   : Colors.black87),
                                     ),
                                     Icon(val.icon,
-                                        color: widget.listOfMenu!.indexOf(val) ==
-                                                widget.selectedIndex
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.black87)
+                                        color:
+                                            widget.listOfMenu!.indexOf(val) ==
+                                                    widget.selectedIndex
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.black87)
                                   ],
                                 ),
                               ),
@@ -141,8 +142,8 @@ class _MyNewAppBarWidgetState extends State<_MyNewAppBarWidget>
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                "assets/FoodHubLogo_B.png",
-                scale: 2,
+                "assets/icon.png",
+                scale: 1.5,
               ),
             ),
           ],

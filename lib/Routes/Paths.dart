@@ -75,8 +75,10 @@ class MyRoute {
 
     return PageTransition(
         child: IndexingPage(whileIndexing: () async {
+          await Future.delayed(Duration(milliseconds: 500));
+
           // init firebase
-          if (MyFirebaseApp.app == null) await MyFirebaseApp.initApp();
+          if (MyFirebaseApp.app == null) MyFirebaseApp.initApp();
           Widget? t;
           if (MyAuthServer.myUser == null) {
             await MyAuthServer.autoLogin();

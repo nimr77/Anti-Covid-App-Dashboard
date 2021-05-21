@@ -7,6 +7,7 @@ class IndexingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    this.whileIndexing();
     return Container();
   }
 }
